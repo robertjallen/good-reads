@@ -1,12 +1,12 @@
+import React from 'react';
 import './App.css';
 import {useEffect, useState} from 'react'
 import {fetchHarry} from "./utils/api"
 import {search} from "./utils/api"
 import List from './components/List'
-import Search from './components/Search'
 
 function App() {
-
+  const [pick, setPick] = useState('Harry Potter')
   const [data, setData] = useState([])
   const [query, setQuery] = useState('')
 
@@ -45,29 +45,34 @@ function App() {
     function handleSubmit(event) {
       event.preventDefault()
       // submitToApi(formData)
-      
       console.log(query)
+      setPick(query)
   }
 
 
 
   return (
     <div className="App">
-      <h1>Search more options</h1>
-
-      <form onSubmit={handleSubmit}>
-		  <input 
-        value={query}
-        type="text"
-        name="title"
-        placeholder='Title'
-        onChange={e => setQuery(e.target.value)}
-      />
-
-		  <input type="submit" />
-		  </form>
-      <hr></hr>
-      <List data={data}/>
+      <header>
+        <h1>Search more options</h1>
+        <div className='wrap'>
+        <form onSubmit={handleSubmit} class="search">
+        <input
+          class="searchTerm" 
+          value={query}
+          type="text"
+          name="title"
+          placeholder='Title'
+          onChange={e => setQuery(e.target.value)}
+        />
+        <input
+          class="searchButton"
+          type="submit"/>
+        </form>
+        </div>
+      </header>
+      
+      <List data={data} pick={pick}/>
     </div>
   );
 }
